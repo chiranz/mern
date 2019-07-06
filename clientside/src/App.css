@@ -4,3 +4,16 @@
   font-size: 2rem;
   margin-top: 0.7rem;
 }
+
+.form-container {
+  width: 400px;
+  margin: auto;
+}
+
+.input-field {
+  margin-bottom: 0 !important;
+  margin-top: 1rem !important;
+}
+.submit-button {
+  margin-top: 1rem !important;
+}
