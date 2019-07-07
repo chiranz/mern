@@ -3,18 +3,26 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { Form, Button, TextArea } from "semantic-ui-react";
 import { useForm } from "../utils/hooks";
+import { FETCH_POSTS_QUERY } from "../utils/graphql";
 
 function PostForm() {
   const { values, onSubmit, onChange } = useForm(createPostCallback, {
     body: "",
     error: ""
   });
-  const [createPost, { error }] = useMutation(CREATE_POST, {
-    update(_, result) {
-      console.log(result);
+  const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
+    variables: values,
+    update(proxy, result) {
+      const data = proxy.readQuery({
+        query: FETCH_POSTS_QUERY
+      });
+      data.getPosts = [result.data.createPost, ...data.getPosts];
+      proxy.writeQuery({
+        query: FETCH_POSTS_QUERY,
+        data
+      });
       values.body = "";
-    },
-    variables: values
+    }
   });
 
   function createPostCallback() {
@@ -37,7 +45,7 @@ function PostForm() {
     </div>
   );
 }
-const CREATE_POST = gql`
+const CREATE_POST_MUTATION = gql`
   mutation createPost($body: String!) {
     createPost(body: $body) {
       id
