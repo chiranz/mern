@@ -17,3 +17,6 @@
 .submit-button {
   margin-top: 1rem !important;
 }
+.header {
+  text-transform: capitalize;
+}

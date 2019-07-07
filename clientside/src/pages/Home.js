@@ -9,9 +9,7 @@ function Home() {
     loading,
     data: { getPosts: posts }
   } = useQuery(FETCH_POST_QUERY);
-  if (posts) {
-    console.log(posts);
-  }
+
   return (
     <Grid columns={3}>
       <Grid.Row className="page-title">
@@ -23,7 +21,14 @@ function Home() {
         ) : (
           posts &&
           posts.map((post, index) => (
-            <Grid.Column key={index} style={{ marginBottom: 20 }} stretched>
+            <Grid.Column
+              key={index}
+              style={{ marginBottom: 20 }}
+              mobile={16}
+              tablet={8}
+              computer={5}
+              stretched
+            >
               <PostCard post={post} />
             </Grid.Column>
           ))
