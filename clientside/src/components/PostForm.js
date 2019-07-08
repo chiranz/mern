@@ -38,9 +38,20 @@ function PostForm() {
           value={values.body}
           onChange={onChange}
         />
-        <Button className="submit-button" color="teal" type="submit">
+
+        <Button
+          disabled={values.body ? false : true}
+          className="submit-button"
+          color="teal"
+          type="submit"
+        >
           Post
         </Button>
+        {error && (
+          <span style={{ color: "#a44544" }}>
+            {error.graphQLErrors[0].message}
+          </span>
+        )}
       </Form>
     </div>
   );
